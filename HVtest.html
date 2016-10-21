@@ -11,6 +11,10 @@
                 font-family: 'Arial';
             }
 
+            p {
+                margin: 5px;
+            }
+
             .page-container {
                 display: flex;
                 flex-flow: column;
@@ -22,6 +26,7 @@
                 width: 300px;
                 position: relative;
                 transition: 0.4s all;
+                margin: 60px;
             }
 
                 .horizontal {
@@ -40,7 +45,7 @@
                 height: 12px;
                 width: 100%;
                 background: cadetblue;
-                border-radius: 3px;
+                border-radius: 8px;
             }
 
             #t-critical-line {
@@ -54,9 +59,30 @@
                 border-radius: 8px;
             }
 
+            #t-correct-line {
+                position: absolute;
+                top: 0px;
+                margin-left: 50%;
+                margin-right: 50%;
+                height: 100%;
+                width: 8px;
+                background: lightcoral;
+                border-radius: 8px;
+            }
+
             .button-area {
                 display: flex;
                 flex-flow: row;
+            }
+
+            #answer-box {
+                width: 200px;
+                height: 50px;
+                border: 1px solid lightgray;
+            }
+
+            button {
+                padding: 20px;
             }
 
 
@@ -78,18 +104,16 @@
             } 
 
             function lengthenLine() {
-                console.log("You pressed the UP key")
+                var oldLength = parseInt(document.getElementById('t-critical-line').style.height)
+
+                if (oldLength < 120) {
+                    document.getElementById('t-critical-line').style.height = oldLength + 1 + "%"
+                }
             }
 
             function shortenLine() {
-                console.log("You pressed the DOWN key")
-                var line = document.getElementById('t-critical-line')
-                var oldLength = line.style.height
-
-                
-                console.log(oldLength)
-
-
+                var oldLength = parseInt(document.getElementById('t-critical-line').style.height)
+                document.getElementById('t-critical-line').style.height = oldLength - 1 + "%"
             }
 
             //Rotate the T
@@ -103,21 +127,39 @@
                 tArea.className = 'vertical'
             }
 
+            //Show the result
+            function showResult() {
+                var answerBox = document.getElementById('answer-box')
+                var answer = document.getElementById('t-critical-line').style.height
+                var tCorrect = document.getElementById('t-correct-line')
+
+                answerBox.innerHTML = answer
+                tCorrect.style.opacity = 1;
+            }
+
         </script>
 
         <!--Page content-->
         <div class="page-container">
 
             <h1>Horizontal-Vertical (T) Illusion</h1>
+            <p>Use the arrow keys (<em>+</em> and <em>-</em>) to adjust the length of the critical (bisecting) line.</p>
+            <p>When you think the two lines are equal in length, click the 'Show result' button to see if you are correct.</p>
             <div id="t-area">
                 <div id="t-comparison-line"></div>
                 <div id="t-critical-line" style="height:100%"></div>
+                <div id="t-correct-line" style="opacity:0"></div>
             </div>
 
             <div class="button-area">
                 <button type="button" onClick=rotateAntiClockwise()>Rotate anti-clockwise</button>
                 <button type="button" onClick=rotateClockwise()>Rotate clockwise</button>
-                <button type="button">Show result</button>
+                <label>
+                    <input id="get-result-button"" type="checkbox" >
+                    Show Result
+                </label>
+                <button type="button" onClick=showResult()>Show result</button>
+                <div id="answer-box"></div>
                 <button type="button" onClick=lengthenLine()>+</button>
                 <button type="button" onClick=shortenLine()>-</button>
 
