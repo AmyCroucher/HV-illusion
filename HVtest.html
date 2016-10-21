@@ -62,12 +62,12 @@
             #t-correct-line {
                 position: absolute;
                 top: 0px;
-                margin-left: 50%;
-                margin-right: 50%;
+                margin-left: calc(50% + 2px);
                 height: 100%;
                 width: 8px;
                 background: lightcoral;
                 border-radius: 8px;
+                transition: 0.4s all;
             }
 
             .button-area {
@@ -76,13 +76,61 @@
             }
 
             #answer-box {
-                width: 200px;
-                height: 50px;
-                border: 1px solid lightgray;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100px;
+                padding: 10px;
+                font-weight: 400;
+                font-size: 28px;
+                transition: 0.4s all;
+
             }
 
             button {
-                padding: 20px;
+                border: none;
+                border-radius: 8px;
+                padding: 15px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                cursor: pointer;
+                user-select: none;
+                transition: 0.2s all;
+            }
+
+                .notselected {
+                    background: lightgray;
+                    color: #888;
+                }
+
+                .selected {
+                    background: coral;
+                    color: white;
+                }
+
+            button:hover {
+                background: lightsalmon;
+            }
+
+            .result-button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                border-radius: 8px;
+                padding: 15px 32px;
+                cursor: pointer;
+                user-select: none;
+            }
+
+            .result-button:hover {
+                background: lightsalmon;
+            }
+
+            input[type=checkbox] {
+                display: none;
             }
 
 
@@ -117,24 +165,53 @@
             }
 
             //Rotate the T
-            function rotateAntiClockwise() {
+            function rotateHorizontal() {
                 var tArea = document.getElementById('t-area')
+                var horizontalButton = document.getElementById('horizontal-button');
+                var verticalButton = document.getElementById('vertical-button');
                 tArea.className = 'horizontal'
+
+                horizontalButton.className = "selected";
+                verticalButton.className = "notselected";
             }
 
-            function rotateClockwise() {
+            function rotateVertical() {
                 var tArea = document.getElementById('t-area')
+                var horizontalButton = document.getElementById('horizontal-button');
+                var verticalButton = document.getElementById('vertical-button');
                 tArea.className = 'vertical'
+
+                horizontalButton.className = "notselected";
+                verticalButton.className = "selected";
             }
 
             //Show the result
-            function showResult() {
+            function showResult(e) {
+
                 var answerBox = document.getElementById('answer-box')
                 var answer = document.getElementById('t-critical-line').style.height
                 var tCorrect = document.getElementById('t-correct-line')
 
+                var lengthenButton = document.getElementById('lengthen-button')
+                var shortenButton = document.getElementById('shorten-button')
+
                 answerBox.innerHTML = answer
-                tCorrect.style.opacity = 1;
+
+                if (e.checked) {
+                    tCorrect.style.opacity = 0.8;
+                    answerBox.style.opacity = 1;
+                    lengthenButton.disabled = true;
+                    shortenButton.disabled = true;
+                } else {
+                    tCorrect.style.opacity = 0;
+                    answerBox.style.opacity = 0;
+                    lengthenButton.disabled = false;
+                    shortenButton.disabled = false;
+                }
+                
+
+                
+                
             }
 
         </script>
@@ -152,16 +229,15 @@
             </div>
 
             <div class="button-area">
-                <button type="button" onClick=rotateAntiClockwise()>Rotate anti-clockwise</button>
-                <button type="button" onClick=rotateClockwise()>Rotate clockwise</button>
-                <label>
-                    <input id="get-result-button"" type="checkbox" >
+                <button id="horizontal-button" type="button" class="notselected" onClick=rotateHorizontal()>Horizontal</button>
+                <button id="vertical-button" type="button" class="notselected" onClick=rotateVertical()>Vertical</button>
+                <label class="result-button notselected">
+                    <input id="get-result-button" type="checkbox" onClick=showResult(this)>
                     Show Result
                 </label>
-                <button type="button" onClick=showResult()>Show result</button>
-                <div id="answer-box"></div>
-                <button type="button" onClick=lengthenLine()>+</button>
-                <button type="button" onClick=shortenLine()>-</button>
+                <div id="answer-box" style="opacity:0"></div>
+                <button id="lengthen-button" class="notselected" type="button" onClick=lengthenLine()>+</button>
+                <button id="shorten-button" class="notselected" type="button" onClick=shortenLine()>-</button>
 
 
             </div>
