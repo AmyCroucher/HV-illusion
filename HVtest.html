@@ -114,7 +114,7 @@
                 background: lightsalmon;
             }
 
-            .result-button {
+            #result-button {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -143,34 +143,23 @@
         <script>
 
             //Get key presses
+
             window.onkeydown = function(event) {
                 if (event.keyCode == 38) {
                     lengthenLine()
                 } else if (event.keyCode == 40) {
                     shortenLine()
                 }
-            } 
-
-            function lengthenLine() {
-                var oldLength = parseInt(document.getElementById('t-critical-line').style.height)
-
-                if (oldLength < 120) {
-                    document.getElementById('t-critical-line').style.height = oldLength + 1 + "%"
-                }
-            }
-
-            function shortenLine() {
-                var oldLength = parseInt(document.getElementById('t-critical-line').style.height)
-                document.getElementById('t-critical-line').style.height = oldLength - 1 + "%"
-            }
+            };
 
             //Rotate the T
+
             function rotateHorizontal() {
                 var tArea = document.getElementById('t-area')
                 var horizontalButton = document.getElementById('horizontal-button');
                 var verticalButton = document.getElementById('vertical-button');
+                
                 tArea.className = 'horizontal'
-
                 horizontalButton.className = "selected";
                 verticalButton.className = "notselected";
             }
@@ -179,15 +168,33 @@
                 var tArea = document.getElementById('t-area')
                 var horizontalButton = document.getElementById('horizontal-button');
                 var verticalButton = document.getElementById('vertical-button');
+               
                 tArea.className = 'vertical'
-
                 horizontalButton.className = "notselected";
                 verticalButton.className = "selected";
-            }
+            };
+
+
+            //Adjust lengths of critical line
+
+            function lengthenLine() {
+                var oldLength = parseInt(document.getElementById('t-critical-line').style.height)
+
+                if (oldLength < 120) {
+                    document.getElementById('t-critical-line').style.height = oldLength + 1 + "%"
+                }
+            };
+
+            function shortenLine() {
+                var oldLength = parseInt(document.getElementById('t-critical-line').style.height)
+                document.getElementById('t-critical-line').style.height = oldLength - 1 + "%"
+            };
+
 
             //Show the result
             function showResult(e) {
 
+                var resultButton = document.getElementById('result-button')
                 var answerBox = document.getElementById('answer-box')
                 var answer = document.getElementById('t-critical-line').style.height
                 var tCorrect = document.getElementById('t-correct-line')
@@ -200,19 +207,17 @@
                 if (e.checked) {
                     tCorrect.style.opacity = 0.8;
                     answerBox.style.opacity = 1;
+                    resultButton.className = "selected"
                     lengthenButton.disabled = true;
                     shortenButton.disabled = true;
                 } else {
                     tCorrect.style.opacity = 0;
                     answerBox.style.opacity = 0;
+                    resultButton.className = "notselected"
                     lengthenButton.disabled = false;
                     shortenButton.disabled = false;
-                }
-                
-
-                
-                
-            }
+                }     
+            };
 
         </script>
 
@@ -229,9 +234,9 @@
             </div>
 
             <div class="button-area">
+                <button id="vertical-button" type="button" class="selected" onClick=rotateVertical()>Vertical</button>
                 <button id="horizontal-button" type="button" class="notselected" onClick=rotateHorizontal()>Horizontal</button>
-                <button id="vertical-button" type="button" class="notselected" onClick=rotateVertical()>Vertical</button>
-                <label class="result-button notselected">
+                <label id="result-button" class="notselected">
                     <input id="get-result-button" type="checkbox" onClick=showResult(this)>
                     Show Result
                 </label>
