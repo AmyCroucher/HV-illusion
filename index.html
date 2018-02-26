@@ -50,7 +50,19 @@
                     -ms-transform: rotate(0deg);
                     -webkit-transform: rotate(0deg);
                 }
-
+                
+                 .angle45 {
+                    transform: rotate(45deg);
+                    -ms-transform: rotate(45deg);
+                    -webkit-transform: rotate(45deg);
+                }
+                
+                .angle135 {
+                    transform: rotate(-135deg);
+                    -ms-transform: rotate(-135deg);
+                    -webkit-transform: rotate(-135deg);
+                }
+                
             #t-comparison-line {
                 height: 12px;
                 width: 100%;
@@ -203,23 +215,58 @@
                 var tArea = document.getElementById('t-area')
                 var horizontalButton = document.getElementById('horizontal-button');
                 var verticalButton = document.getElementById('vertical-button');
+                var angle45Button = document.getElementById('angle45-button');
+                var angle135Button = document.getElementById('angle135-button');
                 
                 tArea.className = 'horizontal'
                 horizontalButton.className = "selected";
                 verticalButton.className = "notselected";
+                angle45Button.className = "notselected";
+                angle135Button.className = "notselected";
             }
 
             function rotateVertical() {
                 var tArea = document.getElementById('t-area')
                 var horizontalButton = document.getElementById('horizontal-button');
                 var verticalButton = document.getElementById('vertical-button');
-               
+                var angle45Button = document.getElementById('angle45-button');
+                var angle135Button = document.getElementById('angle135-button');
+                
                 tArea.className = 'vertical'
                 horizontalButton.className = "notselected";
                 verticalButton.className = "selected";
+                angle45Button.className = "notselected";
+                angle135Button.className = "notselected";
+            }
+            
+            function rotateAngle45() {
+                var tArea = document.getElementById('t-area')
+                var horizontalButton = document.getElementById('horizontal-button');
+                var verticalButton = document.getElementById('vertical-button');
+                var angle45Button = document.getElementById('angle45-button');
+                var angle135Button = document.getElementById('angle135-button');
+                
+                tArea.className = 'angle45'
+                horizontalButton.className = "notselected";
+                verticalButton.className = "notselected";
+                angle45Button.className = "selected";
+                angle135Button.className = "notselected";
+            }
+            
+            function rotateAngle135() {
+                var tArea = document.getElementById('t-area')
+                var horizontalButton = document.getElementById('horizontal-button');
+                var verticalButton = document.getElementById('vertical-button');
+                var angle45Button = document.getElementById('angle45-button');
+                var angle135Button = document.getElementById('angle135-button');
+                
+                tArea.className = 'angle135'
+                horizontalButton.className = "notselected";
+                verticalButton.className = "notselected";
+                angle45Button.className = "notselected";
+                angle135Button.className = "selected";
             };
-
-
+            
             //Adjust lengths of critical line
 
             function lengthenLine() {
@@ -284,6 +331,8 @@
                     <h2>Change orientation:</h2>
                         <button id="vertical-button" type="button" class="selected" onClick=rotateVertical()>Vertical</button>
                         <button id="horizontal-button" type="button" class="notselected" onClick=rotateHorizontal()>Horizontal</button>
+                        <button id="angle45-button" type="button" class="notselected" onClick=rotateAngle45()>Angle 45</button>
+                        <button id="angle135-button" type="button" class="notselected" onClick=rotateAngle135()>Angle 135</button>
                 </div>
                 <div class="button-area">
                     <div class="button-area-pointer"></div>
